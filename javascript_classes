@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Classes Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .example {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        .note {
+            background-color: #fffde7;
+            padding: 15px;
+            border-left: 4px solid #ffd600;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Classes Tutorial</h1>
+    
+    <section>
+        <h2>Introduction to Classes in JavaScript</h2>
+        <p>
+            JavaScript classes, introduced in ES6 (ES2015), are primarily syntactical sugar over JavaScript's existing prototype-based inheritance. 
+            They provide a cleaner way to create objects and deal with inheritance.
+        </p>
+        
+        <div class="note">
+            <strong>Note:</strong> Unlike traditional class-based languages like Java or C++, JavaScript classes are still based on prototypes under the hood.
+        </div>
+    </section>
+    
+    <section>
+        <h2>Class Syntax</h2>
+        <p>The basic class syntax looks like this:</p>
+        
+        <pre><code>class ClassName {
+    constructor() { ... }
+    method1() { ... }
+    method2() { ... }
+    ...
+}</code></pre>
+    </section>
+    
+    <section>
+        <h2>Creating a Class</h2>
+        <p>Let's create a simple class representing a person:</p>
+        
+        <pre><code>class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    greet() {
+        return `Hello, my name is ${this.name} and I'm ${this.age} years old.`;
+    }
+}</code></pre>
+        
+        <div class="example">
+            <h3>Example Usage</h3>
+            <pre><code>const person1 = new Person('Alice', 30);
+console.log(person1.greet()); 
+// Output: "Hello, my name is Alice and I'm 30 years old."</code></pre>
+            
+            <button onclick="runPersonExample()">Run Example</button>
+            <div id="personExampleOutput" style="margin-top: 10px;"></div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Class Inheritance</h2>
+        <p>You can create a child class that inherits from a parent class using the <code>extends</code> keyword:</p>
+        
+        <pre><code>class Student extends Person {
+    constructor(name, age, grade) {
+        super(name, age); // Call the parent constructor
+        this.grade = grade;
+    }
+    
+    study() {
+        return `${this.name} is studying hard for their ${this.grade} grade.`;
+    }
+}</code></pre>
+        
+        <div class="example">
+            <h3>Example Usage</h3>
+            <pre><code>const student1 = new Student('Bob', 20, 'A');
+console.log(student1.greet()); // Inherited from Person
+console.log(student1.study()); // Specific to Student</code></pre>
+            
+            <button onclick="runStudentExample()">Run Example</button>
+            <div id="studentExampleOutput" style="margin-top: 10px;"></div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Static Methods</h2>
+        <p>Static methods are called on the class itself, not on instances of the class:</p>
+        
+        <pre><code>class MathHelper {
+    static square(x) {
+        return x * x;
+    }
+    
+    static cube(x) {
+        return x * x * x;
+    }
+}</code></pre>
+        
+        <div class="example">
+            <h3>Example Usage</h3>
+            <pre><code>console.log(MathHelper.square(3)); // 9
+console.log(MathHelper.cube(3));   // 27</code></pre>
+            
+            <button onclick="runStaticExample()">Run Example</button>
+            <div id="staticExampleOutput" style="margin-top: 10px;"></div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Getters and Setters</h2>
+        <p>Classes support getter and setter methods for accessing properties:</p>
+        
+        <pre><code>class Rectangle {
+    constructor(height, width) {
+        this._height = height;
+        this._width = width;
+    }
+    
+    // Getter
+    get area() {
+        return this._height * this._width;
+    }
+    
+    // Setter
+    set dimensions(dimensions) {
+        [this._height, this._width] = dimensions;
+    }
+}</code></pre>
+        
+        <div class="example">
+            <h3>Example Usage</h3>
+            <pre><code>const rect = new Rectangle(5, 8);
+console.log(rect.area); // 40 (using getter)
+
+rect.dimensions = [10, 20]; // Using setter
+console.log(rect.area); // 200</code></pre>
+            
+            <button onclick="runGetterSetterExample()">Run Example</button>
+            <div id="getterSetterExampleOutput" style="margin-top: 10px;"></div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Private Class Fields (Modern JavaScript)</h2>
+        <p>Recent JavaScript versions support private class fields using a <code>#</code> prefix:</p>
+        
+        <pre><code>class BankAccount {
+    #balance = 0; // Private field
+    
+    deposit(amount) {
+        this.#balance += amount;
+    }
+    
+    withdraw(amount) {
+        if (amount > this.#balance) {
+            throw new Error('Insufficient funds');
+        }
+        this.#balance -= amount;
+    }
+    
+    get balance() {
+        return this.#balance;
+    }
+}</code></pre>
+        
+        <div class="example">
+            <h3>Example Usage</h3>
+            <pre><code>const account = new BankAccount();
+account.deposit(500);
+account.withdraw(200);
+console.log(account.balance); // 300
+// account.#balance would throw an error (private field)</code></pre>
+            
+            <button onclick="runPrivateFieldsExample()">Run Example</button>
+            <div id="privateFieldsExampleOutput" style="margin-top: 10px;"></div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Practice Exercise</h2>
+        <p>Try creating a <code>Car</code> class with the following specifications:</p>
+        <ul>
+            <li>Properties: make, model, year, speed</li>
+            <li>Methods: accelerate (increases speed), brake (decreases speed), describe (returns car info)</li>
+            <li>Bonus: Add a static method that compares two cars</li>
+        </ul>
+        
+        <div id="exerciseArea">
+            <textarea id="exerciseCode" style="width: 100%; height: 200px; font-family: monospace;" placeholder="Write your Car class code here..."></textarea>
+            <button onclick="testExercise()">Test Your Code</button>
+            <div id="exerciseOutput" style="margin-top: 10px;"></div>
+        </div>
+    </section>
+    
+    <script>
+        // Example runner functions
+        function runPersonExample() {
+            class Person {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+                
+                greet() {
+                    return `Hello, my name is ${this.name} and I'm ${this.age} years old.`;
+                }
+            }
+            
+            const person1 = new Person('Alice', 30);
+            document.getElementById('personExampleOutput').innerHTML = 
+                `<strong>Output:</strong> ${person1.greet()}`;
+        }
+        
+        function runStudentExample() {
+            class Person {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+                
+                greet() {
+                    return `Hello, my name is ${this.name} and I'm ${this.age} years old.`;
+                }
+            }
+            
+            class Student extends Person {
+                constructor(name, age, grade) {
+                    super(name, age);
+                    this.grade = grade;
+                }
+                
+                study() {
+                    return `${this.name} is studying hard for their ${this.grade} grade.`;
+                }
+            }
+            
+            const student1 = new Student('Bob', 20, 'A');
+            const output = [
+                `<strong>greet():</strong> ${student1.greet()}`,
+                `<strong>study():</strong> ${student1.study()}`
+            ].join('<br>');
+            
+            document.getElementById('studentExampleOutput').innerHTML = output;
+        }
+        
+        function runStaticExample() {
+            class MathHelper {
+                static square(x) {
+                    return x * x;
+                }
+                
+                static cube(x) {
+                    return x * x * x;
+                }
+            }
+            
+            const output = [
+                `<strong>square(3):</strong> ${MathHelper.square(3)}`,
+                `<strong>cube(3):</strong> ${MathHelper.cube(3)}`
+            ].join('<br>');
+            
+            document.getElementById('staticExampleOutput').innerHTML = output;
+        }
+        
+        function runGetterSetterExample() {
+            class Rectangle {
+                constructor(height, width) {
+                    this._height = height;
+                    this._width = width;
+                }
+                
+                get area() {
+                    return this._height * this._width;
+                }
+                
+                set dimensions(dimensions) {
+                    [this._height, this._width] = dimensions;
+                }
+            }
+            
+            const rect = new Rectangle(5, 8);
+            let output = `<strong>Initial area:</strong> ${rect.area}<br>`;
+            
+            rect.dimensions = [10, 20];
+            output += `<strong>After setter:</strong> ${rect.area}`;
+            
+            document.getElementById('getterSetterExampleOutput').innerHTML = output;
+        }
+        
+        function runPrivateFieldsExample() {
+            class BankAccount {
+                #balance = 0;
+                
+                deposit(amount) {
+                    this.#balance += amount;
+                }
+                
+                withdraw(amount) {
+                    if (amount > this.#balance) {
+                        throw new Error('Insufficient funds');
+                    }
+                    this.#balance -= amount;
+                }
+                
+                get balance() {
+                    return this.#balance;
+                }
+            }
+            
+            const account = new BankAccount();
+            account.deposit(500);
+            account.withdraw(200);
+            
+            let output = `<strong>Balance:</strong> ${account.balance}<br>`;
+            try {
+                // This will throw an error
+                output += `Trying to access private field: ${account.#balance}`;
+            } catch (e) {
+                output += `<strong>Error when accessing private field:</strong> ${e.message}`;
+            }
+            
+            document.getElementById('privateFieldsExampleOutput').innerHTML = output;
+        }
+        
+        function testExercise() {
+            const userCode = document.getElementById('exerciseCode').value;
+            const outputDiv = document.getElementById('exerciseOutput');
+            
+            try {
+                // Create a new function with the user's code
+                const testFn = new Function(`
+                    ${userCode}
+                    
+                    // Test cases
+                    try {
+                        let result = '';
+                        const car1 = new Car('Toyota', 'Camry', 2020, 0);
+                        const car2 = new Car('Honda', 'Accord', 2019, 0);
+                        
+                        // Test basic functionality
+                        car1.accelerate(30);
+                        if (car1.speed !== 30) {
+                            throw new Error('accelerate() not working correctly');
+                        }
+                        
+                        car1.brake(10);
+                        if (car1.speed !== 20) {
+                            throw new Error('brake() not working correctly');
+                        }
+                        
+                        const description = car1.describe();
+                        if (!description.includes('Toyota') || !description.includes('Camry') || !description.includes('2020')) {
+                            throw new Error('describe() not working correctly');
+                        }
+                        
+                        // Test static method if it exists
+                        if (typeof Car.compare === 'function') {
+                            const comparison = Car.compare(car1, car2);
+                            if (!comparison.includes('newer') && !comparison.includes('older')) {
+                                throw new Error('compare() static method not working correctly');
+                            }
+                            result += 'Static method test passed!<br>';
+                        }
+                        
+                        return 'All tests passed! Your Car class works correctly.' + (result ? '<br>' + result : '');
+                    } catch (e) {
+                        return 'Test failed: ' + e.message;
+                    }
+                `);
+                
+                const result = testFn();
+                outputDiv.innerHTML = `<strong>Result:</strong> ${result}`;
+            } catch (e) {
+                outputDiv.innerHTML = `<strong>Error:</strong> ${e.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
